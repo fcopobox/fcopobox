@@ -26,7 +26,7 @@ body {
 }
 
 .circulo {
-    background-color: #CCCCCC;/* Cor de fundo do círculo */
+    background-color: #82a6f5;/* Cor de fundo do círculo */
     border-radius: 50%;         /* Torna o contêiner um círculo */
     width: 36px;
     height: 36px;
@@ -60,6 +60,8 @@ body {
     height: 100vh;
     display: flex;
     background-color: #D0D0D0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
 }
 
 .regras .contentBox {
@@ -68,12 +70,23 @@ body {
     background-color: #C0C0C0;
 }
 
+.regras .boaSorte{
+    font-size: large;
+    color: #eb5009;
+}
+
 .regras .imgBox {
     width: 100%;
-    background: url(../images/Mole.png);    /* url da imagem */
+    /*background: url(../images/Mole.png);    /* url da imagem */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+#toupeira{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Tabuleiro */
@@ -82,16 +95,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #00FF00;
+    background-color: #48c748;
 }
 
 .gramado {
+    position:relative;
     width: 536px;
     height: 536px;
     background-color: #008000;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content:stretch; /* space-around; */
     flex-wrap: wrap;    /* permite quebra de linha nos buracos */
     cursor: url(../images/hammer.png), crosshair;
     padding: 0px;
@@ -100,8 +114,38 @@ body {
 .gramado img {
     padding: 25px 50px 25px 50px;
     box-sizing: content-box;    /* incluído por causa do bootstrap */
-    width: 76px;
+    width: 70px;
     height: 61px;
+}
+
+#buraco0 {
+  position: absolute;
+  top: 80px;
+  left: 50px;
+}
+
+#buraco1 {
+  position: absolute;
+  top: 100px;
+  left: 300px;
+}
+
+#buraco2 {
+  position: absolute;
+  top: 200px;
+  left: 160px;
+}
+
+#buraco3 {
+  position: absolute;
+  top: 300px;
+  left: 50px;
+}
+
+#buraco4 {
+  position: absolute;
+  top: 280px;
+  left: 300px;
 }
 
 .pontos {
@@ -137,6 +181,16 @@ body {
     justify-content: center;    /* centraliza na horizontal */
 }
 
+/* Título */
+.records h2 {
+    color: #FFFFFF;             /* cor da letra */
+    background-color: #000000;  /* cor do fundo */
+    font-family: 'MedievalSharp', cursive;
+    font-size: 50px;
+    text-align: center;
+}
+
+/* Tabela */
 .records table {
     margin: 0px;
     padding: 0px;
@@ -145,8 +199,9 @@ body {
     font-family: 'MedievalSharp', cursive;
 }
 
+/* Cabeçalho da tabela*/
 .records th {
-    padding-left: 30px;
+    padding-left: 20px;
     padding-right: 30px;
     color: #FFFFFF;             /* cor da letra */
     background-color: #000000;  /* cor do fundo */
@@ -154,14 +209,22 @@ body {
     font-size: 36px;
 }
 
+/* Alinhamento do nome no cabeçalho */
+.records th:nth-child(2){
+    text-align: left;
+    padding-left: 80px;
+}
+
+/* Colunas */
 .records td {
     padding-left: 30px;
     padding-right: 30px;
     font-size: 30px;
 }
 
-.records tr:nth-child(even) {   /* seleciona apenas as linhas pares */
-    background-color: #C0C0C0;
+.records td:nth-child(2) { /* coluna dos nomes */
+    text-align: left;
+    padding-left: 80px;
 }
 
 .records td:first-child, td:nth-child(3) {  /* alinha à direita a 1a e a 3a colunas */
@@ -169,20 +232,49 @@ body {
     padding-right: 20px;
 }
 
+/* Linhas */
+.records tr:nth-child(even) {   /* seleciona apenas as linhas pares */
+    background-color: #C0C0C0;
+}
+
+.records tr:nth-child(1) {
+    color: #f33232;
+}
+
 /* Para tornar as nossas páginas responsivas  */
 @media(max-width: 991px) {
     /* Regras */
     .regras {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
     }
+
     .regras .imgBox {
-        height: 100%;
+        display: flex;
+        justify-content: center;   /* centraliza horizontalmente */
+        align-items: center;       /* centraliza verticalmente */
+        height: auto;             /* ocupa toda a altura da tela */
+        padding: 20px;
     }
+
+    #toupeira {
+        width: auto;
+        height: auto;
+        max-height: 600px;
+        display: block;
+    }
+
 
     /* Tabuleiro */
     .tabuleiro {
-        flex-direction: column-reverse;
-        height: 100%;
+        flex-direction:column-reverse;
+        height:100vh;
     }
     .pontos th {
         font-size: 30px;
@@ -199,7 +291,7 @@ body {
         height: 400px;
     }    
     .gramado img {
-        padding: 10px 30px 10px 30px;
+        padding: 0px 30px 10px 0px;
     }
 
     /* Recordes */
