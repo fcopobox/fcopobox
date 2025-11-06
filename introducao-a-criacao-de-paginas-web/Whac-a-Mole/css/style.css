@@ -62,6 +62,7 @@ body {
     background-color: #D0D0D0;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    overflow: hidden;
 }
 
 .regras .contentBox {
