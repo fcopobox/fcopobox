@@ -5,10 +5,11 @@
 var acertos = 0;
 var perdidos = 0;
 var errados = 0;
+var lastSaldo = 0;
 
 // Temporizadores
-var intervalo = 3000; // tempo entre aparições da toupeira
-var janela = 1200; // tempo que a toupeira fica à mostra
+var intervalo = 1000; // tempo entre aparições da toupeira
+var janela = 2000; // tempo que a toupeira fica à mostra
 
 var buraco = 0;
 
@@ -58,17 +59,13 @@ function sobeToupeira(){
     const objBuraco = document.getElementById('buraco' + buraco);
     objBuraco.src = 'images/hole-mole.png';
 
-    timerToupeira = setTimeout(tiraToupeira, Janela(), buraco);
-    timerProxima = setTimeout(sobeToupeira, Intervalo());
-}
-
-function Janela(){
-    janela = Math.random() * 1000 + 700; 
-    return janela;
+    
+    timerToupeira = setTimeout(tiraToupeira, 400 + janela, buraco);
+    timerProxima = setTimeout(sobeToupeira, intervalo + janela);
 }
 
 function Intervalo(){
-    return Math.random() * 1500 + janela;
+    return intervalo + janela;
 }
 
 function tiraToupeira(buraco){
@@ -82,10 +79,29 @@ function tiraToupeira(buraco){
 
 function mostraPontuacao(){
     //mostra pontuação
+    // recalcula janela de tempo
+    let saldo = Math.max(acertos-perdidos-errados,0);
     mostraPontuacaoDe('acertos', acertos);
     mostraPontuacaoDe('perdidos', perdidos);
     mostraPontuacaoDe('errados', errados);
-    mostraPontuacaoDe('saldo', Math.max(acertos-perdidos-errados,0)); // retorna saldo positivo ou zero
+    mostraPontuacaoDe('saldo', saldo ); // retorna saldo positivo ou zero
+
+    if (saldo > lastSaldo){
+        janela -= 100;
+        if (janela < 0 ){
+            janela = 0;
+        }
+        lastSaldo = saldo;
+    }
+    else if (saldo < lastSaldo){
+        janela +=100;
+        if (janela > intervalo){
+            janela = intervalo;
+        } 
+        lastSaldo = saldo;
+    }
+    // console.log("lastSaldo = " + lastSaldo)
+    // console.log("Janela = " + janela);
 }
 
 function mostraPontuacaoDe(display, valor){
