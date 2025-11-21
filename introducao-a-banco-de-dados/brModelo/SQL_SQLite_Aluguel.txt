@@ -1,0 +1,61 @@
+CREATE TABLE Proprietario (
+    Nome_Completo TEXT,
+    DDN DATE,
+    Telefone TEXT,
+    email TEXT,
+    CPF INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Imovel (
+    ID INTEGER PRIMARY KEY,
+    CEP INTEGER,
+    Numero INTEGER,
+    Complemento TEXT,
+    Quartos INTEGER,
+    Banheiros INTEGER,
+    Vaga_garagem INTEGER, -- use 0/1 for boolean
+    Aceita_animais INTEGER,
+    Diaria_minima REAL,
+    Diaria_adicional REAL,
+    Maximo_pessoas INTEGER,
+    Descricao TEXT,
+    Disponivel INTEGER
+);
+
+CREATE TABLE Locatario (
+    email TEXT,
+    Nome_Completo TEXT,
+    Telefone TEXT,
+    CPF INTEGER PRIMARY KEY,
+    DDN DATE
+);
+
+CREATE TABLE Pertence_a (
+    fk_Proprietario_CPF INTEGER,
+    fk_Imovel_ID INTEGER,
+    FOREIGN KEY (fk_Proprietario_CPF) REFERENCES Proprietario (CPF) ON DELETE RESTRICT,
+    FOREIGN KEY (fk_Imovel_ID) REFERENCES Imovel (ID) ON DELETE RESTRICT
+);
+
+CREATE TABLE Aluga (
+    fk_Locatario_CPF INTEGER,
+    fk_Imovel_ID INTEGER,
+    ID_Locacao INTEGER PRIMARY KEY,
+    Inicio_Previsto DATE,
+    Final_Previsto DATE,
+    CheckIn DATE,
+    CheckOut DATE,
+    N_Pessoas INTEGER,
+    Valor_a_ser_pago REAL,
+    Avaliacao TEXT,
+    FOREIGN KEY (fk_Locatario_CPF) REFERENCES Locatario (CPF) ON DELETE SET NULL,
+    FOREIGN KEY (fk_Imovel_ID) REFERENCES Imovel (ID) ON DELETE SET NULL
+);
+
+CREATE TABLE Observacoes (
+    OBSID INTEGER PRIMARY KEY,
+    fk_Aluga_ID INTEGER,
+    OBSDATA DATE,
+    OBSTexto TEXT,
+    FOREIGN KEY (fk_Aluga_ID) REFERENCES Aluga (ID_Locacao)
+);
